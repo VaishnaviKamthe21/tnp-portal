@@ -1,9 +1,11 @@
+import logging
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.job import Job
 
+logger = logging.getLogger("app.jobs")
 router = APIRouter(prefix="/jobs", tags=["Jobs"])
 
 
@@ -27,9 +29,12 @@ def create_job(
     db.commit()
     db.refresh(job)
 
+    logger.info(f"Job created: {title} at {company} (ID: {job.id})")
     return {"message": "Job created", "job_id": job.id}
 
 
 @router.get("/")
 def list_jobs(db: Session = Depends(get_db)):
-    return db.query(Job).all()
+    jobs = db.query(Job).all()
+    logger.info(f"Fetched {len(jobs)} jobs")
+    return jobs

@@ -19,3 +19,7 @@ class StudentProfile(Base):
     aptitude_score = Column(Float)
 
     resume_link = Column(String)          # Google Drive link
+
+    placed_status = Column(Integer, default=0)  # 0 = Not placed, 1 = Placed
+    
+    

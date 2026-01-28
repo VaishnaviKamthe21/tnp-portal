@@ -1,9 +1,11 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.student import StudentProfile
 
+logger = logging.getLogger("app.student")
 router = APIRouter(prefix="/students", tags=["Students"])
 
 
@@ -53,6 +55,7 @@ def create_or_update_profile(
     db.commit()
     db.refresh(profile)
 
+    logger.info(f"Student profile {'updated' if profile else 'created'} for user {user_id}")
     return {"message": "Profile saved", "profile_id": profile.id}
 
 
@@ -61,6 +64,7 @@ def get_profile(user_id: int, db: Session = Depends(get_db)):
     profile = db.query(StudentProfile).filter(StudentProfile.user_id == user_id).first()
 
     if not profile:
+        logger.warning(f"Profile not found for user_id {user_id}")
         raise HTTPException(status_code=404, detail="Profile not found")
 
     return profile
