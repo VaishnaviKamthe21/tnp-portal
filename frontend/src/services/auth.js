@@ -1,16 +1,24 @@
 import api from './api';
 
 export const login = async (email, password) => {
-    const response = await api.post('/auth/login', { email, password });
-    if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+    const params = new URLSearchParams({ email, password });
+    const response = await api.post(`/auth/login?${params.toString()}`);
+
+    if (response.data.user_id) {
+        // Store user info
+        localStorage.setItem('user', JSON.stringify({
+            id: response.data.user_id,
+            role: response.data.role
+        }));
+        // Since backend doesn't provide a JWT yet, we'll use user_id as a dummy token
+        localStorage.setItem('token', response.data.user_id);
     }
     return response.data;
 };
 
-export const register = async (userData) => {
-    const response = await api.post('/auth/register', userData);
+export const signup = async (email, password, role = 'student') => {
+    const params = new URLSearchParams({ email, password, role });
+    const response = await api.post(`/auth/signup?${params.toString()}`);
     return response.data;
 };
 

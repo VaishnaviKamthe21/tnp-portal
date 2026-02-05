@@ -1,15 +1,33 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, GraduationCap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, GraduationCap, User, LogOut } from 'lucide-react';
+import { getCurrentUser, logout, isAuthenticated } from '../services/auth';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+    const [user, setUser] = useState(null);
     const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsAuth(isAuthenticated());
+        setUser(getCurrentUser());
+    }, [location]);
+
+    const handleLogout = () => {
+        logout();
+        setIsAuth(false);
+        setUser(null);
+        navigate('/');
+        setIsOpen(false);
+    };
 
     const navLinks = [
         { name: 'Home', path: '/' },
+        ...(user?.role === 'student' ? [{ name: 'Jobs', path: '/student/jobs' }] : []),
+        ...(user?.role === 'admin' ? [{ name: 'Dashboard', path: '/admin/dashboard' }] : []),
         { name: 'About', path: '/about' },
-        { name: 'Jobs', path: '/student/jobs' },
         { name: 'Contact', path: '/contact' },
     ];
 
@@ -36,8 +54,8 @@ const Navbar = () => {
                                 key={link.name}
                                 to={link.path}
                                 className={`text-sm font-medium transition-colors relative py-2 ${isActive(link.path)
-                                        ? 'text-blue-600'
-                                        : 'text-gray-600 hover:text-blue-600'
+                                    ? 'text-blue-600'
+                                    : 'text-gray-600 hover:text-blue-600'
                                     }`}
                             >
                                 {link.name}
@@ -50,18 +68,39 @@ const Navbar = () => {
 
                     {/* CTA Buttons */}
                     <div className="hidden md:flex items-center gap-3">
-                        <Link
-                            to="/admin/jobs"
-                            className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-                        >
-                            Post a Job
-                        </Link>
-                        <Link
-                            to="/student/jobs"
-                            className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
-                        >
-                            Want a Job
-                        </Link>
+                        {isAuth ? (
+                            <>
+                                <Link
+                                    to="/profile"
+                                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                                >
+                                    <User className="w-4 h-4" />
+                                    Profile
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    to="/login"
+                                    className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                >
+                                    Sign In
+                                </Link>
+                                <Link
+                                    to="/signup"
+                                    className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/25 transition-all"
+                                >
+                                    Sign Up
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -82,8 +121,8 @@ const Navbar = () => {
                                     key={link.name}
                                     to={link.path}
                                     className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive(link.path)
-                                            ? 'bg-blue-50 text-blue-600'
-                                            : 'text-gray-600 hover:bg-gray-50'
+                                        ? 'bg-blue-50 text-blue-600'
+                                        : 'text-gray-600 hover:bg-gray-50'
                                         }`}
                                     onClick={() => setIsOpen(false)}
                                 >
