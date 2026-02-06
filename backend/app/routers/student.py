@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.student import StudentProfile
+from app.models.application import Application
 
 logger = logging.getLogger("app.student")
 router = APIRouter(prefix="/students", tags=["Students"])
@@ -68,3 +69,24 @@ def get_profile(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Profile not found")
 
     return profile
+
+
+@router.get("/applications/{user_id}")
+def get_student_applications(user_id: int, db: Session = Depends(get_db)):
+    # 1. Get student profile id from user_id
+    student = db.query(StudentProfile).filter(StudentProfile.user_id == user_id).first()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student profile not found")
+
+    # 2. Get applications
+    applications = db.query(Application).filter(Application.student_id == student.id).all()
+    
+    return applications
+
+
+@router.get("/all")
+def get_all_students(db: Session = Depends(get_db)):
+    """Get all student profiles - for admin use"""
+    students = db.query(StudentProfile).all()
+    return students
+

@@ -38,7 +38,7 @@ def department_summary(db: Session = Depends(get_db)):
 @router.get("/placement-rate")
 def placement_rate(db: Session = Depends(get_db)):
     total = db.query(StudentProfile).count()
-    placed = db.query(StudentProfile).filter(StudentProfile.placed_status == True).count()
+    placed = db.query(StudentProfile).filter(StudentProfile.placed_status == 1).count()
 
     if total == 0:
         return {"placement_rate": 0.0}
