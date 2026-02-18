@@ -14,7 +14,8 @@ from app.routers import (
     student_extra,
     notifications,
     chat,
-    recommendations
+    recommendations,
+    placement
 )
 
 
@@ -79,6 +80,7 @@ app.include_router(student_extra.router)
 app.include_router(notifications.router)
 app.include_router(chat.router)
 app.include_router(recommendations.router)
+app.include_router(placement.router)
 
 @app.get("/")
 def root():
