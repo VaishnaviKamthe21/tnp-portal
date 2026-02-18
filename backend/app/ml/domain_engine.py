@@ -1,63 +1,73 @@
-from app.ml.domain_registry import DOMAIN_REGISTRY
+from .domain_registry import DOMAIN_REGISTRY
 
 
-WEIGHTS = {
-    "core": 3,
-    "advanced": 2,
-    "trending": 2.5
-}
+def normalize_skill_text(skill_text: str):
+    if not skill_text:
+        return set()
+
+    return set(
+        skill.strip().lower()
+        for skill in skill_text.split(",")
+    )
 
 
-def clean_text(text):
-    if not text:
-        return ""
-    return text.lower()
+def determine_readiness(score: float):
+    if score >= 0.75:
+        return "Industry Ready"
+    elif score >= 0.5:
+        return "Moderately Ready"
+    elif score >= 0.3:
+        return "Needs Improvement"
+    else:
+        return "Beginner Level"
 
 
-def compute_domain_score(student_skills: str, domain_key: str):
+def compute_domain_alignment(student_skills: str):
 
-    student_skills = clean_text(student_skills)
-    domain = DOMAIN_REGISTRY[domain_key]
-
-    score = 0
-    max_score = 0
-
-    matched = {
-        "core": [],
-        "advanced": [],
-        "trending": []
-    }
-
-    for level in ["core", "advanced", "trending"]:
-
-        for skill in domain[level]:
-            weight = WEIGHTS[level]
-            max_score += weight
-
-            if skill.lower() in student_skills:
-                score += weight
-                matched[level].append(skill)
-
-    alignment = round(score / max_score, 3) if max_score > 0 else 0
-
-    return {
-        "domain": domain["label"],
-        "alignment_score": alignment,
-        "matched_skills": matched
-    }
-
-def detect_best_domain(student_skills: str):
+    skill_list = normalize_skill_text(student_skills)
 
     best_domain = None
     best_score = 0
-    best_details = None
+    best_data = None
 
-    for key in DOMAIN_REGISTRY.keys():
-        result = compute_domain_score(student_skills, key)
+    for domain_name, categories in DOMAIN_REGISTRY.items():
 
-        if result["alignment_score"] > best_score:
-            best_score = result["alignment_score"]
-            best_domain = key
-            best_details = result
+        earned = 0
+        total = 0
 
-    return best_details
+        matched = {"core": [], "advanced": [], "trending": []}
+        missing = {"core": [], "advanced": [], "trending": []}
+
+        for category, skills in categories.items():
+
+            weight = 3 if category == "core" else 2 if category == "advanced" else 1
+
+            for skill in skills:
+                total += weight
+
+                if skill.lower() in skill_list:
+                    earned += weight
+                    matched[category].append(skill)
+                else:
+                    missing[category].append(skill)
+
+        score = round(earned / total, 3) if total else 0
+
+        if score > best_score:
+            best_score = score
+            best_domain = domain_name
+            best_data = {
+                "matched": matched,
+                "missing": missing,
+                "score": score
+            }
+
+    readiness = determine_readiness(best_score)
+
+    return {
+        "domain": best_domain,
+        "alignment_score": best_score,
+        "readiness_level": readiness,
+        "matched_skills": best_data["matched"],
+        "missing_skills": best_data["missing"]
+    }

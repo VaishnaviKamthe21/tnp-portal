@@ -1,15 +1,14 @@
-from app.ml.domain_engine import compute_domain_score, detect_best_domain
+from .domain_engine import compute_domain_alignment
 
 
-def get_student_domain_analysis(student):
+def get_domain_advisory(student):
 
-    skills = student.skills or ""
-
+    # If internship_domain exists → use it
     if student.internship_domain:
-        domain_key = student.internship_domain.lower().replace(" ", "_")
-        try:
-            return compute_domain_score(skills, domain_key)
-        except:
-            return detect_best_domain(skills)
+        domain_hint = student.internship_domain
     else:
-        return detect_best_domain(skills)
+        domain_hint = None
+
+    advisory = compute_domain_alignment(student.skills)
+
+    return advisory

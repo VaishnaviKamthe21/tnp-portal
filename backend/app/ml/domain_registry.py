@@ -1,81 +1,111 @@
 DOMAIN_REGISTRY = {
-    "data_ai": {
-        "label": "Data & AI",
+
+    "Data & AI": {
         "core": [
-            "python", "sql", "statistics", "pandas", "numpy"
+            "python",
+            "sql",
+            "statistics",
+            "machine learning",
+            "data analysis"
         ],
         "advanced": [
-            "machine learning", "deep learning", "tensorflow",
-            "pytorch", "nlp", "computer vision"
+            "deep learning",
+            "tensorflow",
+            "pytorch",
+            "scikit-learn",
+            "nlp",
+            "computer vision"
         ],
         "trending": [
-            "llm", "generative ai", "langchain",
-            "mlops", "vector database", "prompt engineering"
+            "llm",
+            "generative ai",
+            "rag",
+            "langchain",
+            "huggingface"
         ]
     },
 
-    "software_development": {
-        "label": "Software Development",
+    "Software Development": {
         "core": [
-            "java", "python", "c++", "oop", "data structures"
+            "data structures",
+            "algorithms",
+            "oops",
+            "java",
+            "python",
+            "c++"
         ],
         "advanced": [
-            "spring", "django", "react", "node",
-            "microservices", "system design"
+            "spring",
+            "django",
+            "fastapi",
+            "react",
+            "nodejs"
         ],
         "trending": [
-            "cloud native", "kubernetes", "docker",
-            "devops", "ci/cd"
+            "microservices",
+            "system design",
+            "docker",
+            "kubernetes",
+            "rest api"
         ]
     },
 
-    "cloud_devops": {
-        "label": "Cloud & DevOps",
+    "Cloud & DevOps": {
         "core": [
-            "linux", "networking", "aws", "azure"
+            "linux",
+            "networking",
+            "git",
+            "docker"
         ],
         "advanced": [
-            "docker", "kubernetes", "terraform",
-            "ci/cd", "monitoring"
+            "aws",
+            "azure",
+            "gcp",
+            "kubernetes",
+            "ci/cd"
         ],
         "trending": [
-            "platform engineering",
-            "site reliability",
-            "cloud security"
+            "terraform",
+            "cloud security",
+            "observability",
+            "prometheus"
         ]
     },
 
-    "cybersecurity": {
-        "label": "Cybersecurity",
+    "Cybersecurity": {
         "core": [
-            "network security", "cryptography",
-            "ethical hacking", "linux"
+            "network security",
+            "cryptography",
+            "linux",
+            "ethical hacking"
         ],
         "advanced": [
             "penetration testing",
-            "siem", "incident response"
+            "siem",
+            "malware analysis"
         ],
         "trending": [
-            "zero trust",
             "cloud security",
-            "threat intelligence"
+            "zero trust",
+            "soc analyst"
         ]
     },
 
-    "embedded_iot": {
-        "label": "Embedded & IoT",
+    "Embedded & IoT": {
         "core": [
-            "c", "c++", "microcontrollers",
+            "c",
+            "c++",
+            "microcontrollers",
             "embedded systems"
         ],
         "advanced": [
-            "rtos", "pcb design",
-            "sensor integration"
+            "arduino",
+            "raspberry pi",
+            "rtos"
         ],
         "trending": [
-            "edge ai",
-            "industrial iot",
-            "automotive embedded"
+            "edge computing",
+            "iot security"
         ]
     }
 }

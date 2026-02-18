@@ -1,9 +1,6 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
-
-# Load once at startup (IMPORTANT for performance)
-sbert = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+from app.ml.embeddings import sbert_model
 
 # -------------------------------------------------
 # Curated trending skills (can later pull dynamically)
@@ -29,7 +26,7 @@ TRENDING_SKILLS = [
 ]
 
 # Precompute embeddings once
-TRENDING_EMBEDDINGS = sbert.encode(TRENDING_SKILLS)
+TRENDING_EMBEDDINGS = sbert_model.encode(TRENDING_SKILLS)
 
 
 # -------------------------------------------------
@@ -46,7 +43,7 @@ def analyze_student_skills(student):
         }
 
     student_skill_text = student.skills.lower()
-    student_embedding = sbert.encode([student_skill_text])
+    student_embedding = sbert_model.encode([student_skill_text])
 
     similarities = cosine_similarity(
         student_embedding,

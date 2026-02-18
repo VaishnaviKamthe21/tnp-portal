@@ -1,11 +1,8 @@
 # app/ml/feature_builder.py
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from app.ml.loaders import FEATURE_NAMES
-
-# Load SBERT once (production-safe singleton pattern)
-sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
+from app.ml.embeddings import sbert_model
 
 
 # Branch order MUST match training notebook exactly
