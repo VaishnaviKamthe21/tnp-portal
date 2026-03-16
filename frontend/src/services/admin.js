@@ -24,3 +24,8 @@ export const markPlaced = async (userId) => {
     const response = await api.post(`/admin/mark-placed/${userId}`);
     return response.data;
 };
+
+export const getAdminDashboard = async () => {
+    const response = await api.get('/admin/dashboard');
+    return response.data;
+};

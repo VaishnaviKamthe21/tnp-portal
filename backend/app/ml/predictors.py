@@ -1,7 +1,6 @@
 from app.ml.feature_builder import build_student_feature_vector
 from app.ml.loaders import placement_model
 from app.ml.explainer import get_shap_explanation
-from app.ml.skill_analyzer import analyze_student_skills
 from app.ml.domain_service import get_domain_advisory
 
 

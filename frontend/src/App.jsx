@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminJobs from './pages/AdminJobs';
 import JobRecommendations from './pages/JobRecommendations';
 import ApplicantsManagement from './pages/ApplicantsManagement';
+import StudentDashboard from './pages/StudentDashboard';
 import FloatingChatbot from './components/FloatingChatbot';
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
 
                     {/* Student Protected Routes */}
+                    <Route path="/student/dashboard" element={
+                        <ProtectedRoute allowedRoles={['student']}>
+                            <StudentDashboard />
+                        </ProtectedRoute>
+                    } />
                     <Route path="/student/jobs" element={
                         <ProtectedRoute allowedRoles={['student']}>
                             <StudentJobs />

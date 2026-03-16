@@ -14,7 +14,7 @@ from app.utils.hashing import hash_password
 
 
 def seed_database():
-    print("\n🌱 Seeding database with demo data...\n")
+    print("\n[SEED] Seeding database with demo data...\n")
 
     db: Session = SessionLocal()
 
@@ -199,7 +199,7 @@ def seed_database():
         # ------------------------
         # Done
         # ------------------------
-        print("✅ Database seeded successfully!\n")
+        print("[SEED] Database seeded successfully!\n")
 
         print("Demo Accounts:")
         print("Admin Login:")

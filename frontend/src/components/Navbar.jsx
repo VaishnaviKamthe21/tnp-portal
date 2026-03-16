@@ -26,6 +26,7 @@ const Navbar = () => {
     const navLinks = [
         { name: 'Home', path: '/' },
         ...(user?.role === 'student' ? [
+            { name: 'Dashboard', path: '/student/dashboard' },
             { name: 'Jobs', path: '/student/jobs' },
             { name: 'My Applications', path: '/student/applications' }
         ] : []),

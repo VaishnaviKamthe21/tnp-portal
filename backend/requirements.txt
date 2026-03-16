@@ -1,9 +1,29 @@
+# Core API
 fastapi
 uvicorn
 pydantic
-SQLAlchemy
 python-dotenv
+requests
+
+# Database
+SQLAlchemy
+alembic
+psycopg2-binary
+
+# Security
 passlib==1.7.4
 bcrypt==3.2.2
-psycopg2-binary
-alembic
+
+# Machine Learning & Data
+xgboost==3.1.3
+scikit-learn
+pandas
+numpy
+shap==0.50.0
+
+# NLP / Embeddings
+sentence-transformers==5.2.2
+torch
+
+# Chatbot Integration
+groq==1.1.1

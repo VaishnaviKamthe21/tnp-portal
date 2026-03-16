@@ -16,3 +16,8 @@ export const getAllStudents = async () => {
     return response.data;
 };
 
+export const getDashboard = async (userId) => {
+    const response = await api.get(`/students/dashboard/${userId}`);
+    return response.data;
+};
+
