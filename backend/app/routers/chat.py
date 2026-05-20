@@ -1,12 +1,17 @@
+"""
+Chat router — SSE streaming endpoint for the agentic AI pipeline.
+"""
+
 import logging
 from pydantic import BaseModel
 from typing import List, Optional
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.student import StudentProfile
-from app.utils.chat_service import chat_with_llm
+from app.agents.pipeline import run_agent_pipeline_stream
 
 logger = logging.getLogger("app.chat")
 router = APIRouter(prefix="/chat", tags=["Chatbot"])
@@ -24,35 +29,36 @@ class ChatRequest(BaseModel):
 
 
 @router.post("/ask")
-def ask_bot(req: ChatRequest, db: Session = Depends(get_db)):
+async def ask_bot(req: ChatRequest, db: Session = Depends(get_db)):
     """
-    Career preparation chatbot endpoint.
-    Accepts the question, optional user_id (for personalized context),
-    and optional conversation history for multi-turn chat.
+    Agentic AI chatbot — returns an SSE stream with live agent
+    status updates and the final formatted response.
     """
 
     logger.info(f"Chat query (user_id={req.user_id}): {req.question[:80]}")
 
-    # Fetch student profile for personalized context
+    # Fetch student profile for personalised context
     student = None
     if req.user_id:
         student = db.query(StudentProfile).filter(
             StudentProfile.user_id == req.user_id
         ).first()
 
-    # Convert history to dicts
+    # Convert history to plain dicts
     history = None
     if req.history:
         history = [{"role": m.role, "content": m.content} for m in req.history]
 
-    # Call LLM
-    answer = chat_with_llm(
-        question=req.question,
-        student=student,
-        history=history,
+    return StreamingResponse(
+        run_agent_pipeline_stream(
+            question=req.question,
+            student=student,
+            history=history,
+        ),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
     )
-
-    return {
-        "question": req.question,
-        "answer": answer,
-    }

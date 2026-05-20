@@ -3,7 +3,7 @@
 ## Requirements
 - Python 3.10 / 3.11
 - PostgreSQL 14+
-- Node.js (optional frontend)
+- Node.js 18+ (for frontend)
 - Git
 
 ---
@@ -35,3 +35,22 @@ python -m app.seed
 ```bash
 uvicorn app.main:app --reload
 ```
+
+---
+
+## Frontend Setup
+
+Ensure you have Node.js installed.
+
+```bash
+cd frontend
+npm install
+```
+
+## Run Frontend
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`.

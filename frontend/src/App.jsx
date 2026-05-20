@@ -19,7 +19,7 @@ import FloatingChatbot from './components/FloatingChatbot';
 
 function App() {
     return (
-        <div className="min-h-screen bg-transparent">
+        <div className="min-h-screen bg-[#f0f0ee]">
             <Navbar />
             <div className="pt-16">
                 <Routes>

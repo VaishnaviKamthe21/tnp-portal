@@ -32,7 +32,6 @@ const AdminJobs = () => {
             ...prev,
             [name]: value
         }));
-        // Clear errors when user types
         if (error) setError('');
     };
 
@@ -42,7 +41,6 @@ const AdminJobs = () => {
         setError('');
         setSuccess('');
 
-        // Basic validation
         if (!formData.company || !formData.title || !formData.min_cgpa) {
             setError('Please fill in all required fields.');
             setLoading(false);
@@ -52,7 +50,6 @@ const AdminJobs = () => {
         try {
             await createJob(formData);
             setSuccess('Job posted successfully!');
-            // Reset form
             setFormData({
                 company: '',
                 title: '',
@@ -60,9 +57,8 @@ const AdminJobs = () => {
                 min_cgpa: '',
                 required_skills: ''
             });
-            // Optional: Redirect after delay
             setTimeout(() => {
-                navigate('/student/jobs'); // Or stay here to post more
+                navigate('/student/jobs');
             }, 2000);
         } catch (err) {
             console.error('Error posting job:', err);
@@ -75,39 +71,38 @@ const AdminJobs = () => {
     return (
         <div className="max-w-3xl mx-auto px-4 py-12">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Post a New Job</h1>
-                <p className="text-gray-500">Create a new job opening for students to apply.</p>
+                <h1 className="text-3xl font-extrabold text-[#1a1a18] mb-1 tracking-tight">Post a New Job</h1>
+                <p className="text-[#8a8a84] text-sm font-medium">Create a new job opening for students to apply.</p>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-xl shadow-blue-500/5 border border-gray-100 overflow-hidden">
-                <div className="bg-gray-50 px-8 py-4 border-b border-gray-100 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Briefcase className="w-4 h-4 text-blue-600" />
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl border border-[#e0dfdb] overflow-hidden shadow-sm">
+                <div className="bg-[#f0f0ee] px-8 py-5 border-b border-[#e0dfdb] flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#1a1a18] rounded-xl flex items-center justify-center shadow-md">
+                        <Briefcase className="w-5 h-5 text-[#f0f0ee]" />
                     </div>
-                    <span className="font-semibold text-gray-700">Job Details</span>
+                    <span className="font-bold text-[#1a1a18] tracking-wider uppercase text-sm">Job Details</span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-6">
                     {error && (
-                        <div className="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center gap-3 text-red-600">
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3 text-red-600 font-medium">
                             <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                            <span className="text-sm font-medium">{error}</span>
+                            <span className="text-sm">{error}</span>
                         </div>
                     )}
 
                     {success && (
-                        <div className="p-4 bg-green-50 border border-green-100 rounded-xl flex items-center gap-3 text-green-600">
+                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 text-green-700 font-medium">
                             <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                            <span className="text-sm font-medium">{success}</span>
+                            <span className="text-sm">{success}</span>
                         </div>
                     )}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Company Name */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <Building2 className="w-4 h-4 text-gray-400" />
-                                Company Name <span className="text-red-500">*</span>
+                            <label className="text-sm font-bold text-[#4a4a46] flex items-center gap-2">
+                                <Building2 className="w-4 h-4 text-[#a0a09b]" />
+                                Company Name <span className="text-[#1a1a18]">*</span>
                             </label>
                             <input
                                 type="text"
@@ -115,16 +110,15 @@ const AdminJobs = () => {
                                 value={formData.company}
                                 onChange={handleChange}
                                 placeholder="e.g. Google, Amazon"
-                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-[#e0dfdb] focus:border-[#1a1a18] focus:ring-2 focus:ring-[#1a1a18] transition-all outline-none text-sm bg-[#f0f0ee] text-[#1a1a18] font-medium placeholder-[#a0a09b]"
                                 required
                             />
                         </div>
 
-                        {/* Job Title */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <Briefcase className="w-4 h-4 text-gray-400" />
-                                Job Title <span className="text-red-500">*</span>
+                            <label className="text-sm font-bold text-[#4a4a46] flex items-center gap-2">
+                                <Briefcase className="w-4 h-4 text-[#a0a09b]" />
+                                Job Title <span className="text-[#1a1a18]">*</span>
                             </label>
                             <input
                                 type="text"
@@ -132,16 +126,15 @@ const AdminJobs = () => {
                                 value={formData.title}
                                 onChange={handleChange}
                                 placeholder="e.g. Software Engineer"
-                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-[#e0dfdb] focus:border-[#1a1a18] focus:ring-2 focus:ring-[#1a1a18] transition-all outline-none text-sm bg-[#f0f0ee] text-[#1a1a18] font-medium placeholder-[#a0a09b]"
                                 required
                             />
                         </div>
                     </div>
 
-                    {/* Job Description */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <FileText className="w-4 h-4 text-gray-400" />
+                        <label className="text-sm font-bold text-[#4a4a46] flex items-center gap-2">
+                            <FileText className="w-4 h-4 text-[#a0a09b]" />
                             Description
                         </label>
                         <textarea
@@ -150,16 +143,15 @@ const AdminJobs = () => {
                             onChange={handleChange}
                             placeholder="Describe the role, responsibilities, and perks..."
                             rows="4"
-                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none resize-none"
+                            className="w-full px-4 py-3 rounded-lg border border-[#e0dfdb] focus:border-[#1a1a18] focus:ring-2 focus:ring-[#1a1a18] transition-all outline-none resize-none text-sm bg-[#f0f0ee] text-[#1a1a18] font-medium placeholder-[#a0a09b]"
                         />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Min CGPA */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <GraduationCap className="w-4 h-4 text-gray-400" />
-                                Minimum CGPA <span className="text-red-500">*</span>
+                            <label className="text-sm font-bold text-[#4a4a46] flex items-center gap-2">
+                                <GraduationCap className="w-4 h-4 text-[#a0a09b]" />
+                                Minimum CGPA <span className="text-[#1a1a18]">*</span>
                             </label>
                             <input
                                 type="number"
@@ -170,15 +162,14 @@ const AdminJobs = () => {
                                 step="0.1"
                                 min="0"
                                 max="10"
-                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-[#e0dfdb] focus:border-[#1a1a18] focus:ring-2 focus:ring-[#1a1a18] transition-all outline-none text-sm bg-[#f0f0ee] text-[#1a1a18] font-medium placeholder-[#a0a09b]"
                                 required
                             />
                         </div>
 
-                        {/* Required Skills */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <Code2 className="w-4 h-4 text-gray-400" />
+                            <label className="text-sm font-bold text-[#4a4a46] flex items-center gap-2">
+                                <Code2 className="w-4 h-4 text-[#a0a09b]" />
                                 Required Skills
                             </label>
                             <input
@@ -187,16 +178,16 @@ const AdminJobs = () => {
                                 value={formData.required_skills}
                                 onChange={handleChange}
                                 placeholder="e.g. React, Python, SQL (comma separated)"
-                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-[#e0dfdb] focus:border-[#1a1a18] focus:ring-2 focus:ring-[#1a1a18] transition-all outline-none text-sm bg-[#f0f0ee] text-[#1a1a18] font-medium placeholder-[#a0a09b]"
                             />
                         </div>
                     </div>
 
-                    <div className="pt-4">
+                    <div className="pt-6">
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full bg-[#1a1a18] text-[#f0f0ee] font-bold py-3.5 rounded-lg hover:bg-black hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm uppercase tracking-wider"
                         >
                             {loading ? (
                                 <>

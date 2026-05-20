@@ -20,65 +20,59 @@ const JobCard = ({ job, onApply, userId = 1 }) => {
         }
     };
 
-    // Parse skills - handle both string and array formats
     const skills = Array.isArray(job.required_skills)
         ? job.required_skills
         : job.required_skills?.split(',').map(s => s.trim()) || [];
 
     return (
-        <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300 overflow-hidden">
+        <div className="group bg-white/70 rounded-xl border border-[#e0dfdb] hover:border-[#d0cfcb] hover:shadow-lg hover:shadow-black/[0.04] transition-all duration-300 overflow-hidden">
             {/* Header */}
             <div className="p-6 pb-4">
                 <div className="flex items-start justify-between gap-4">
-                    {/* Company Logo Placeholder */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 flex-shrink-0">
-                        <Building2 className="w-7 h-7 text-white" />
+                    <div className="w-11 h-11 bg-[#1a1a18] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Building2 className="w-5 h-5 text-[#f0f0ee]" />
                     </div>
-
-                    {/* Job Type Badge */}
-                    <span className="px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full">
+                    <span className="px-3 py-1 text-xs font-semibold text-[#6b6b66] bg-[#e6e5e1] rounded-full uppercase tracking-widest">
                         Full Time
                     </span>
                 </div>
 
-                {/* Job Info */}
-                <div className="mt-4">
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <div className="mt-5">
+                    <h3 className="text-lg font-bold text-[#1a1a18] group-hover:text-black transition-colors">
                         {job.title}
                     </h3>
-                    <p className="text-gray-600 font-medium">{job.company}</p>
+                    <p className="text-[#8a8a84] text-sm mt-1">{job.company}</p>
                 </div>
 
-                {/* Meta Info */}
-                <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-gray-500">
+                <div className="flex flex-wrap items-center gap-4 mt-5 text-sm text-[#8a8a84]">
                     <div className="flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4" />
+                        <MapPin className="w-4 h-4 text-[#a0a09b]" />
                         <span>{job.location || 'Remote'}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <GraduationCap className="w-4 h-4" />
+                        <GraduationCap className="w-4 h-4 text-[#a0a09b]" />
                         <span>Min CGPA: {job.min_cgpa}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-4 h-4 text-[#a0a09b]" />
                         <span>Posted recently</span>
                     </div>
                 </div>
             </div>
 
             {/* Skills */}
-            <div className="px-6 py-4 border-t border-gray-50">
+            <div className="px-6 py-4 border-t border-[#e0dfdb]/60">
                 <div className="flex flex-wrap gap-2">
                     {skills.slice(0, 4).map((skill, index) => (
                         <span
                             key={index}
-                            className="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-full"
+                            className="px-3 py-1 text-xs font-medium text-[#4a4a46] bg-[#f0f0ee] border border-[#e0dfdb] rounded-lg"
                         >
                             {skill}
                         </span>
                     ))}
                     {skills.length > 4 && (
-                        <span className="px-3 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full">
+                        <span className="px-3 py-1 text-xs font-medium text-[#a0a09b] bg-[#f0f0ee] border border-[#e0dfdb] rounded-lg">
                             +{skills.length - 4} more
                         </span>
                     )}
@@ -87,24 +81,24 @@ const JobCard = ({ job, onApply, userId = 1 }) => {
 
             {/* Description Preview */}
             {job.description && (
-                <div className="px-6 py-3 border-t border-gray-50">
-                    <p className="text-sm text-gray-600 line-clamp-2">{job.description}</p>
+                <div className="px-6 py-4 border-t border-[#e0dfdb]/60 bg-[#f0f0ee]/50">
+                    <p className="text-sm text-[#6b6b66] line-clamp-2 leading-relaxed">{job.description}</p>
                 </div>
             )}
 
             {/* Footer */}
-            <div className="px-6 py-4 bg-gray-50/50 flex items-center justify-between">
-                <div className="text-sm text-gray-500">
+            <div className="px-6 py-4 bg-[#f0f0ee]/80 flex items-center justify-between border-t border-[#e0dfdb]/60">
+                <div className="text-[13px] font-medium text-[#8a8a84]">
                     {job.applicants_count ? `${job.applicants_count} applicants` : 'Be the first to apply'}
                 </div>
                 <button
                     onClick={handleApply}
                     disabled={isApplying || applied}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all ${applied
-                            ? 'bg-green-100 text-green-700 cursor-default'
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm transition-all ${applied
+                            ? 'bg-[#e6e5e1] text-[#6b6b66] cursor-default'
                             : isApplying
-                                ? 'bg-gray-100 text-gray-400 cursor-wait'
-                                : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:from-blue-700 hover:to-blue-800'
+                                ? 'bg-[#e6e5e1] text-[#a0a09b] cursor-wait'
+                                : 'bg-[#1a1a18] text-[#f0f0ee] hover:bg-black hover:shadow-md'
                         }`}
                 >
                     {applied ? (

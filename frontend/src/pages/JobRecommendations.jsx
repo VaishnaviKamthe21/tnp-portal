@@ -52,12 +52,6 @@ const JobRecommendations = () => {
         }
     };
 
-    const getMatchColor = (probability) => {
-        if (probability >= 0.7) return 'text-green-600 bg-green-50 border-green-200';
-        if (probability >= 0.4) return 'text-blue-600 bg-blue-50 border-blue-200';
-        return 'text-orange-600 bg-orange-50 border-orange-200';
-    };
-
     const getMatchLabel = (probability) => {
         if (probability >= 0.7) return 'Excellent Match';
         if (probability >= 0.4) return 'Good Match';
@@ -66,8 +60,8 @@ const JobRecommendations = () => {
 
     if (loading) {
         return (
-            <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gray-50">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+            <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
+                <Loader2 className="w-6 h-6 animate-spin text-[#8a8a84]" />
             </div>
         );
     }
@@ -76,57 +70,55 @@ const JobRecommendations = () => {
         <div className="max-w-6xl mx-auto px-4 py-12">
             {/* Header */}
             <div className="mb-10">
-                <div className="flex items-center gap-3 mb-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/25">
-                        <Sparkles className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-4 mb-3">
+                    <div className="w-12 h-12 bg-[#1a1a18] rounded-xl flex items-center justify-center shadow-md">
+                        <Sparkles className="w-6 h-6 text-[#f0f0ee]" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Recommended for You</h1>
-                        <p className="text-gray-500">AI-powered job matches based on your profile</p>
+                        <h1 className="text-3xl font-extrabold text-[#1a1a18] tracking-tight">Recommended for You</h1>
+                        <p className="text-[#6b6b66] text-sm font-medium mt-1">Smart job matches based on your profile and skills</p>
                     </div>
                 </div>
             </div>
 
             {error && (
-                <div className="mb-8 p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3">
+                <div className="mb-8 p-4 bg-red-50 border border-red-200 text-red-600 font-medium rounded-lg flex items-center gap-3">
                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                    <span className="text-sm font-medium">{error}</span>
+                    <span className="text-sm">{error}</span>
                 </div>
             )}
 
             {recommendations.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-5">
                     {recommendations.map((rec) => (
                         <div
                             key={rec.job_id}
-                            className="bg-white rounded-3xl border border-gray-100 shadow-xl shadow-blue-500/5 overflow-hidden hover:border-blue-100 transition-all"
+                            className="bg-white/70 backdrop-blur-sm rounded-2xl border border-[#e0dfdb] overflow-hidden hover:border-[#d0cfcb] hover:shadow-lg hover:shadow-black/[0.04] transition-all duration-300"
                         >
-                            <div className="p-6">
+                            <div className="p-7">
                                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                                    {/* Job Info */}
                                     <div className="flex-1">
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                                                <Briefcase className="w-7 h-7 text-blue-600" />
+                                        <div className="flex items-start gap-5">
+                                            <div className="w-14 h-14 bg-[#e6e5e1] rounded-xl flex items-center justify-center flex-shrink-0">
+                                                <Briefcase className="w-7 h-7 text-[#4a4a46]" />
                                             </div>
                                             <div className="flex-1">
-                                                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                                                <h3 className="text-xl font-bold text-[#1a1a18] mb-1.5">
                                                     {rec.job_title || 'Job Position'}
                                                 </h3>
-                                                <div className="flex items-center gap-2 text-gray-500 mb-3">
+                                                <div className="flex items-center gap-2 text-[#8a8a84] font-medium text-sm mb-4">
                                                     <Building2 className="w-4 h-4" />
-                                                    <span className="font-medium">{rec.company || 'Company Name'}</span>
+                                                    <span>{rec.company || 'Company Name'}</span>
                                                 </div>
 
-                                                {/* Match Score */}
-                                                <div className="flex items-center gap-3">
-                                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${getMatchColor(rec.probability)}`}>
-                                                        <TrendingUp className="w-4 h-4" />
-                                                        <span className="text-sm font-bold">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#e0dfdb] bg-[#f0f0ee]">
+                                                        <TrendingUp className="w-4 h-4 text-[#1a1a18]" />
+                                                        <span className="text-sm font-bold text-[#1a1a18]">
                                                             {Math.round(rec.probability * 100)}% Match
                                                         </span>
                                                     </div>
-                                                    <span className="text-xs text-gray-400 font-medium">
+                                                    <span className="text-xs text-[#8a8a84] uppercase tracking-wider font-bold">
                                                         {getMatchLabel(rec.probability)}
                                                     </span>
                                                 </div>
@@ -134,17 +126,16 @@ const JobRecommendations = () => {
                                         </div>
                                     </div>
 
-                                    {/* Apply Button */}
                                     <div className="flex items-center gap-3">
                                         <button
                                             onClick={() => handleApply(rec.job_id)}
                                             disabled={applyingTo === rec.job_id}
-                                            className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                            className="px-8 py-3 bg-[#1a1a18] text-[#f0f0ee] font-bold rounded-xl hover:bg-black hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm uppercase tracking-wider"
                                         >
                                             {applyingTo === rec.job_id ? (
                                                 <>
                                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                                    Applying...
+                                                    Applying
                                                 </>
                                             ) : (
                                                 <>
@@ -160,18 +151,18 @@ const JobRecommendations = () => {
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-24 bg-white rounded-3xl border border-dashed border-gray-200">
-                    <div className="max-w-md mx-auto">
-                        <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Sparkles className="w-8 h-8 text-gray-300" />
+                <div className="text-center py-24 bg-white/70 backdrop-blur-sm rounded-2xl border border-dashed border-[#d0cfcb]">
+                    <div className="max-w-md mx-auto px-4">
+                        <div className="w-16 h-16 bg-[#e6e5e1] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+                            <Sparkles className="w-8 h-8 text-[#6b6b66]" />
                         </div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">No Recommendations Yet</h3>
-                        <p className="text-gray-500 text-sm mb-6">
-                            Complete your profile to get personalized job recommendations!
+                        <h3 className="text-xl font-extrabold text-[#1a1a18] mb-3">No Recommendations Yet</h3>
+                        <p className="text-[#8a8a84] font-medium text-sm mb-8 leading-relaxed">
+                            Complete your profile with your latest skills, CGPA, and internship details to get personalized, AI-powered job recommendations.
                         </p>
                         <button
                             onClick={() => navigate('/profile')}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
+                            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#1a1a18] text-[#f0f0ee] font-bold rounded-xl hover:bg-black transition-all text-sm uppercase tracking-wider shadow-md hover:shadow-lg"
                         >
                             Complete Profile
                             <ArrowRight className="w-4 h-4" />

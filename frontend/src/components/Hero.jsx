@@ -19,63 +19,66 @@ const Hero = () => {
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* Background with overlay */}
+            {/* Background */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{
                     backgroundImage: `url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`,
                 }}
             >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-blue-800/85 to-slate-900/90 backdrop-blur-sm" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#111110]/95 via-[#1a1a18]/92 to-[#111110]/95" />
             </div>
 
-            {/* Decorative elements */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
+            {/* Subtle grain texture */}
+            <div className="absolute inset-0 opacity-[0.03]" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+            }} />
 
             {/* Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+            <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-8">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-sm text-white/90">500+ Students Placed Successfully</span>
+                <div className="inline-flex items-center gap-2.5 px-5 py-2 bg-white/[0.07] backdrop-blur-sm rounded-full border border-white/[0.08] mb-10">
+                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                    <span className="text-[13px] text-white/70 font-medium tracking-wide">500+ Students Placed Successfully</span>
                 </div>
 
                 {/* Main Heading */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-extrabold text-white mb-6 leading-[1.1] tracking-tight">
                     {isAdmin ? (
                         <>
                             Your Students are{' '}
-                            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                            <span className="text-[#a0a09b]">
                                 Waiting
                             </span>
                             {' '}for their Dream Job
                         </>
                     ) : (
                         <>
-                            Your Dream Job is{' '}
-                            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                            Your Dream Job{' '}
+                            <br className="hidden md:block" />
+                            is{' '}
+                            <span className="text-[#a0a09b]">
                                 Waiting
                             </span>
                         </>
                     )}
                 </h1>
 
-                <p className="text-lg sm:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg text-white/50 mb-14 max-w-xl mx-auto leading-relaxed font-normal">
                     We connect final year students with verified placement opportunities from top companies across India.
                 </p>
 
-                {/* Search Bar - Hidden for Admins */}
+                {/* Search Bar */}
                 {!isAdmin && (
-                    <div className="max-w-4xl mx-auto mb-12">
-                        <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl shadow-black/20 flex flex-col md:flex-row gap-2">
+                    <div className="max-w-3xl mx-auto mb-14">
+                        <div className="bg-[#f0f0ee] rounded-xl p-1.5 shadow-2xl shadow-black/40 flex flex-col md:flex-row gap-1.5">
                             {/* Search Input */}
-                            <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl">
+                            <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
                                 <Search className="w-5 h-5 text-gray-400" />
                                 <input
                                     type="text"
                                     placeholder="Search job title or company"
-                                    className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-400"
+                                    className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-400 text-sm"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
@@ -84,7 +87,7 @@ const Hero = () => {
                             {/* Category Dropdown */}
                             <div className="relative">
                                 <select
-                                    className="w-full md:w-44 px-4 py-3 bg-gray-50 rounded-xl appearance-none outline-none text-gray-600 cursor-pointer hover:bg-gray-100 transition-colors"
+                                    className="w-full md:w-40 px-4 py-3 bg-white rounded-lg appearance-none outline-none text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors text-sm"
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
@@ -99,7 +102,7 @@ const Hero = () => {
                             {/* Location Dropdown */}
                             <div className="relative">
                                 <select
-                                    className="w-full md:w-40 px-4 py-3 bg-gray-50 rounded-xl appearance-none outline-none text-gray-600 cursor-pointer hover:bg-gray-100 transition-colors"
+                                    className="w-full md:w-36 px-4 py-3 bg-white rounded-lg appearance-none outline-none text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors text-sm"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                 >
@@ -112,26 +115,26 @@ const Hero = () => {
                             </div>
 
                             {/* Search Button */}
-                            <button className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all">
+                            <button className="px-7 py-3 bg-[#1a1a18] text-white font-medium rounded-lg hover:bg-black transition-colors text-sm">
                                 Search
                             </button>
                         </div>
                     </div>
                 )}
 
-                {/* Action Buttons - Conditional for Admin/Student */}
+                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     {isAdmin ? (
                         <>
                             <Link
                                 to="/admin/jobs"
-                                className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all transform hover:-translate-y-0.5"
+                                className="px-8 py-3.5 bg-[#f0f0ee] text-[#1a1a18] font-semibold rounded-lg hover:bg-white transition-colors text-sm"
                             >
-                                Post a Job →
+                                Post a Job
                             </Link>
                             <Link
                                 to="/admin/dashboard"
-                                className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all transform hover:-translate-y-0.5"
+                                className="px-8 py-3.5 bg-white/[0.08] border border-white/[0.12] text-white/80 font-medium rounded-lg hover:bg-white/[0.14] transition-colors text-sm"
                             >
                                 Dashboard
                             </Link>
@@ -140,13 +143,13 @@ const Hero = () => {
                         <>
                             <Link
                                 to="/student/jobs"
-                                className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all transform hover:-translate-y-0.5"
+                                className="px-8 py-3.5 bg-[#f0f0ee] text-[#1a1a18] font-semibold rounded-lg hover:bg-white transition-colors text-sm"
                             >
-                                Find a Job →
+                                Find a Job
                             </Link>
                             <Link
                                 to="/student/recommendations"
-                                className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all transform hover:-translate-y-0.5"
+                                className="px-8 py-3.5 bg-white/[0.08] border border-white/[0.12] text-white/80 font-medium rounded-lg hover:bg-white/[0.14] transition-colors text-sm"
                             >
                                 Recommended Jobs for you
                             </Link>
@@ -155,7 +158,7 @@ const Hero = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
                     {[
                         { value: '500+', label: 'Students Placed' },
                         { value: '100+', label: 'Partner Companies' },
@@ -163,8 +166,8 @@ const Hero = () => {
                         { value: '50+', label: 'Active Jobs' },
                     ].map((stat, index) => (
                         <div key={index} className="text-center">
-                            <div className="text-3xl sm:text-4xl font-bold text-white mb-1">{stat.value}</div>
-                            <div className="text-sm text-white/60">{stat.label}</div>
+                            <div className="text-3xl sm:text-4xl font-bold text-white/90 mb-1">{stat.value}</div>
+                            <div className="text-xs text-white/40 font-medium uppercase tracking-wider">{stat.label}</div>
                         </div>
                     ))}
                 </div>

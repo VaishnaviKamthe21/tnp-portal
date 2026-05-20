@@ -27,3 +27,7 @@ torch
 
 # Chatbot Integration
 groq==1.1.1
+
+# Agentic AI Pipeline
+duckduckgo-search
+beautifulsoup4

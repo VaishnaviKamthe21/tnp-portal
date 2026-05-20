@@ -48,10 +48,7 @@ def upgrade() -> None:
         TYPE BOOLEAN
         USING placed_status::boolean
     """)
-    op.add_column(
-        "student_profiles",
-        sa.Column("clubs", sa.Text(), nullable=True)
-    )
+
 
     op.drop_constraint(op.f('student_profiles_user_id_key'), 'student_profiles', type_='unique')
     op.drop_constraint(op.f('student_profiles_user_id_fkey'), 'student_profiles', type_='foreignkey')
@@ -81,7 +78,7 @@ def downgrade() -> None:
     op.drop_column("student_profiles", "clubs")
     op.drop_column('student_profiles', 'placement_domain')
     op.drop_column('student_profiles', 'internship_domain')
-    op.drop_column('student_profiles', 'clubs')
+
     op.drop_column('student_profiles', 'sem8_gpa')
     op.drop_column('student_profiles', 'sem7_gpa')
     op.drop_column('student_profiles', 'sem6_gpa')

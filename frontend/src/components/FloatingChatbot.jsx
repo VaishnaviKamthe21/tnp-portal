@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, X, MessageCircle } from 'lucide-react';
+import { Bot } from 'lucide-react';
 import { getCurrentUser } from '../services/auth';
 
 const FloatingChatbot = () => {
@@ -23,19 +23,16 @@ const FloatingChatbot = () => {
                 onClick={handleClick}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full shadow-2xl shadow-blue-500/30 flex items-center justify-center hover:scale-110 transition-all duration-300 group relative"
+                className="w-14 h-14 bg-[#1a1a18] rounded-2xl shadow-xl flex items-center justify-center hover:bg-black hover:scale-105 transition-all duration-200 group relative"
                 aria-label="Open AI Assistant"
             >
-                <Bot className="w-8 h-8 text-white" />
-
-                {/* Pulse animation */}
-                <span className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-20"></span>
+                <Bot className="w-6 h-6 text-[#f0f0ee]" />
 
                 {/* Tooltip */}
                 {isHovered && (
-                    <div className="absolute bottom-full right-0 mb-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-xl whitespace-nowrap shadow-lg">
+                    <div className="absolute bottom-full right-0 mb-3 px-4 py-2 bg-[#1a1a18] text-[#f0f0ee] text-xs font-bold uppercase tracking-widest rounded-xl whitespace-nowrap shadow-lg">
                         AI Assistant
-                        <div className="absolute top-full right-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-gray-900"></div>
+                        <div className="absolute top-full right-5 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-[#1a1a18]" />
                     </div>
                 )}
             </button>
