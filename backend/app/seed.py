@@ -20,7 +20,14 @@ def seed_database():
 
     try:
         # ------------------------
-        # Clear existing data
+        # Check if database is already seeded
+        # ------------------------
+        if db.query(User).first() is not None:
+            print("[SEED] Database already has data. Skipping seeding...")
+            return
+
+        # ------------------------
+        # Clear existing data (only runs if DB is empty, as a safety fallback)
         # ------------------------
         db.query(Application).delete()
         db.query(StudentProfile).delete()
